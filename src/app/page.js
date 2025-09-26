@@ -6,12 +6,10 @@ import Link from "@mui/material/Link";
 import NextLink from "next/link";
 import ProTip from "@/components/ProTip";
 import Copyright from "@/components/Copyright";
-import Header from "@/components/Header";
 
 export default function Home() {
   return (
     <>
-      <Header />
       <Container maxWidth="lg">
         <Box
           sx={{
