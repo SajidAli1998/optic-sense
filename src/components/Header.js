@@ -11,23 +11,15 @@ import {
   List,
   ListItem,
   ListItemText,
+  Container,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-
-const NavLink = styled("a")(({ theme }) => ({
-  marginLeft: theme.spacing(3),
-  textDecoration: "none",
-  color: theme.palette.text.primary,
-  fontWeight: 600,
-  fontFamily: "'Poppins', sans-serif",
-  "&:hover": {
-    color: theme.palette.primary.main,
-  },
-}));
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -39,84 +31,33 @@ export default function Header() {
     { label: "SERVICES", href: "/services" },
     { label: "OUR CLIENTS", href: "/clients" },
     { label: "ABOUT", href: "/about" },
-    { label: "CONTACT", href: "/contact" },
-    { label: "OUR TEAM", href: "/team" },
   ];
 
-  const drawer = (
-    <Box
-      sx={{
-        width: 260,
-        height: "100%",
-        bgcolor: "primary.main",
-        color: "#fff",
-        display: "flex",
-        flexDirection: "column",
-        p: 3,
-      }}
-    >
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <IconButton onClick={handleDrawerToggle} sx={{ color: "#fff" }}>
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <List>
-        {navLinks.map((link) => (
-          <ListItem button key={link.href} component="a" href={link.href}>
-            <ListItemText
-              primary={link.label}
-              primaryTypographyProps={{
-                fontFamily: "'Poppins', sans-serif",
-                fontWeight: 600,
-              }}
-            />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
-    <>
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{
-          bgcolor: "background.default",
-          borderBottom: 1,
-          borderColor: "divider",
-        }}
-      >
-        <Toolbar sx={{ justifyContent: "space-between", px: { xs: 2, md: 6 } }}>
+    <Container maxWidth="xl">
+      <StyledAppBar position="static">
+        <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
+            <MobileMenuButton
               edge="start"
               aria-label="menu"
-              sx={{ color: "primary.main", mr: 1, display: { md: "none" } }}
               onClick={handleDrawerToggle}
             >
               <MenuIcon />
-            </IconButton>
-            <img
-              src="/images/logo.png"
-              alt="Opticsense WLL"
-              style={{ height: 50 }}
-            />
+            </MobileMenuButton>
+            <LogoImg src="/images/logo.png" alt="Opticsense WLL" />
           </Box>
-
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              alignItems: "center",
-            }}
-          >
+          <DesktopNav>
             {navLinks.map((link) => (
-              <NavLink key={link.href} href={link.href}>
+              <NavLink
+                key={link.href}
+                href={link.href}
+                $active={pathname === link.href}
+              >
                 {link.label}
               </NavLink>
             ))}
-          </Box>
-
+          </DesktopNav>
           <Button
             size="small"
             href="/contact"
@@ -132,24 +73,146 @@ export default function Header() {
           >
             Contact Us
           </Button>
-        </Toolbar>
-      </AppBar>
+        </StyledToolbar>
+      </StyledAppBar>
 
-      {/* Mobile drawer */}
-      <Drawer
+      <StyledDrawer
         anchor="left"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        sx={{
-          "& .MuiDrawer-paper": {
-            width: 260,
-            bgcolor: "primary.main",
-            color: "#fff",
-          },
+        variant="temporary"
+        ModalProps={{
+          keepMounted: true,
+          disableScrollLock: false,
         }}
+        disableScrollLock={false}
       >
-        {drawer}
-      </Drawer>
-    </>
+        <DrawerContent>
+          <DrawerBackgroundImage src="/images/barbed-wire-drawer.png" alt="" />
+          <DrawerCloseBox>
+            <IconButton onClick={handleDrawerToggle} sx={{ color: "#fff" }}>
+              <CloseIcon />
+            </IconButton>
+          </DrawerCloseBox>
+          <List>
+            {navLinks.map((link) => (
+              <DrawerListItem
+                key={link.href}
+                component="a"
+                href={link.href}
+                active={pathname === link.href}
+                onClick={handleDrawerToggle}
+              >
+                <ListItemText primary={link.label} />
+              </DrawerListItem>
+            ))}
+          </List>
+        </DrawerContent>
+      </StyledDrawer>
+    </Container>
   );
 }
+
+const NavLink = styled("a")(({ theme, $active }) => ({
+  marginLeft: theme.spacing(3),
+  textDecoration: "none",
+  color: $active ? theme.palette.primary.main : theme.palette.text.primary,
+  fontWeight: 600,
+  fontFamily: "'Poppins', sans-serif",
+  transition: "color 0.2s",
+  "&:hover": {
+    color: theme.palette.primary.main,
+  },
+}));
+
+const LogoImg = styled("img")({
+  height: 50,
+});
+
+const DesktopNav = styled(Box)(({ theme }) => ({
+  display: "none",
+  alignItems: "center",
+  [theme.breakpoints.up("md")]: {
+    display: "flex",
+  },
+}));
+
+const MobileMenuButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  marginRight: theme.spacing(1),
+  display: "block",
+  [theme.breakpoints.up("md")]: {
+    display: "none",
+  },
+}));
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  boxShadow: "none",
+}));
+
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  justifyContent: "space-between",
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(6),
+  [theme.breakpoints.down("md")]: {
+    paddingRight: theme.spacing(2),
+  },
+}));
+
+const StyledDrawer = styled(Drawer)({
+  position: "relative",
+  "& .MuiDrawer-paper": {
+    width: "100vw",
+    height: "100%",
+    backgroundColor: "#550D16",
+    color: "#fff",
+    maxWidth: "100vw",
+    maxHeight: "100vh",
+    borderRadius: 0,
+    overflowY: "auto",
+    touchAction: "auto",
+  },
+});
+
+const DrawerBackgroundImage = styled("img")({
+  position: "absolute",
+  inset: 0,
+  width: "100%",
+  height: "100%",
+  pointerEvents: "none",
+  zIndex: 1,
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+});
+
+const DrawerContent = styled(Box)(({ theme }) => ({
+  width: "100vw",
+  height: "100vh",
+  backgroundColor: theme.palette.primary.main,
+  color: "#fff",
+  display: "flex",
+  flexDirection: "column",
+  padding: theme.spacing(3),
+  position: "relative",
+  zIndex: 1,
+}));
+
+const DrawerCloseBox = styled(Box)({
+  display: "flex",
+  justifyContent: "flex-end",
+});
+
+const DrawerListItem = styled(ListItem, {
+  shouldForwardProp: (prop) => prop !== "active",
+})(({ theme, active }) => ({
+  backgroundColor: active ? "rgba(255,255,255,0.12)" : "inherit",
+  "& .MuiListItemText-primary": {
+    fontFamily: "'Poppins', sans-serif",
+    fontWeight: 600,
+    color: "#fff",
+  },
+}));

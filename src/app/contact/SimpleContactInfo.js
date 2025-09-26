@@ -1,8 +1,89 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Grid, useTheme } from "@mui/material";
+import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+export default function SimpleContactInfo() {
+  const theme = useTheme();
+
+  return (
+    <StyledContainer maxWidth="xl">
+      <BackgroundImage src="/images/twirly-lines.png" alt="" />
+
+      <Grid container spacing={6} alignItems="center">
+        <Grid item xs={12} md={6}>
+          <Section>
+            <Title variant="subtitle1">Contact Info</Title>
+            <Heading variant="h3">
+              We are always happy <br /> to assist you
+            </Heading>
+          </Section>
+        </Grid>
+
+        <Grid item xs={12} md={3}>
+          <Section>
+            <Label variant="h6">Email Address</Label>
+            <Underline />
+            <StrongText variant="body1">help@info.com</StrongText>
+            <BodyText variant="body2">
+              Assistance hours:
+              <br />
+              Monday – Friday 6 am to <br /> 8 pm EST
+            </BodyText>
+          </Section>
+        </Grid>
+
+        <Grid item xs={12} md={3}>
+          <Section>
+            <Label variant="h6">Number</Label>
+            <Underline />
+            <StrongText variant="body1">(808) 998-34256</StrongText>
+            <BodyText variant="body2">
+              Assistance hours:
+              <br />
+              Monday – Friday 6 am to <br /> 8 pm EST
+            </BodyText>
+          </Section>
+        </Grid>
+      </Grid>
+    </StyledContainer>
+  );
+}
+
+/* ---------------- STYLES ---------------- */
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  position: "relative",
+  padding: theme.spacing(6, 4),
+  justifyItems: "center",
+}));
+
+const Section = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(1.5),
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  marginBottom: theme.spacing(1),
+}));
+
+const Heading = styled(Typography)(({ theme }) => ({
+  fontWeight: 800,
+  color: theme.palette.primary.main,
+  fontSize: "2rem",
+  lineHeight: 1.2,
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2.8rem",
+  },
+}));
+
+const Label = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  fontWeight: 700,
+}));
 
 const Underline = styled(Box)(({ theme }) => ({
   width: 32,
@@ -12,89 +93,25 @@ const Underline = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-export default function SimpleContactInfo() {
-  const theme = useTheme();
+const StrongText = styled(Typography)(({ theme }) => ({
+  fontWeight: 700,
+  color: theme.palette.primary.main,
+  marginBottom: theme.spacing(1),
+}));
 
-  return (
-    <Grid
-      container
-      spacing={6}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: {
-          xs: "column",
-          alignItems: "center",
-          md: "row",
-          lg: "row",
-          "@media (max-width:1150px)": {
-            flexDirection: "column",
-          },
-        },
-      }}
-    >
-      <Grid item xs={12} md={6} size={[12, 12, 6, 6]}>
-        <Typography
-          variant="subtitle1"
-          sx={{ color: theme.palette.text.secondary, mb: 1 }}
-        >
-          Contact Info
-        </Typography>
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 800,
-            color: theme.palette.primary.main,
-            fontSize: { xs: "2rem", md: "2.8rem" },
-            lineHeight: 1.2,
-          }}
-        >
-          We are always happy to assist you
-        </Typography>
-      </Grid>
+const BodyText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  lineHeight: 2,
+}));
 
-      <Grid item xs={12}>
-        <Typography
-          variant="h6"
-          sx={{ color: theme.palette.primary.main, fontWeight: 700 }}
-        >
-          Email Address
-        </Typography>
-        <Underline />
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: 700, color: theme.palette.primary.main, mb: 1 }}
-        >
-          help@info.com
-        </Typography>
-        <Typography variant="body2" sx={{ color: theme.palette.text.primary }}>
-          Assistance hours:
-          <br />
-          Monday – Friday 6 am to 8 pm EST
-        </Typography>
-      </Grid>
-
-      {/* Column 3: Number */}
-      <Grid item xs={12} md={4}>
-        <Typography
-          variant="h6"
-          sx={{ color: theme.palette.primary.main, fontWeight: 700 }}
-        >
-          Number
-        </Typography>
-        <Underline />
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: 700, color: theme.palette.primary.main, mb: 1 }}
-        >
-          (808) 998-34256
-        </Typography>
-        <Typography variant="body2" sx={{ color: theme.palette.text.primary }}>
-          Assistance hours:
-          <br />
-          Monday – Friday 6 am to 8 pm EST
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-}
+const BackgroundImage = styled("img")({
+  position: "absolute",
+  width: "100%",
+  opacity: 0.7,
+  objectFit: "cover",
+  zIndex: -1,
+  top: -60,
+  left: 0,
+  bottom: 0,
+  right: 0,
+});
