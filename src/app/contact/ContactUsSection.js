@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -20,9 +20,18 @@ import {
   Phone,
   Email,
   LocationOn,
+  X,
 } from "@mui/icons-material";
+import { client } from "../../sanity/sanity-client";
 
 export default function ContactUsSection() {
+  const [contact, setContact] = useState(null);
+  const [social, setSocial] = useState(null);
+
+  useEffect(() => {
+    client.fetch(`*[_type == "contactInfo"][0]`).then(setContact);
+    client.fetch(`*[_type == "socialLinks"][0]`).then(setSocial);
+  }, []);
   return (
     <>
       <SectionWrapper>
@@ -45,32 +54,75 @@ export default function ContactUsSection() {
             <Stack spacing={3} sx={{ mb: 4, width: "100%" }}>
               <ContactInfoRow>
                 <Phone sx={{ fontSize: 28 }} />
-                <ContactInfoText>+974 44507855</ContactInfoText>
+                <ContactInfoText>{contact?.phone}</ContactInfoText>
               </ContactInfoRow>
               <ContactInfoRow>
                 <Email sx={{ fontSize: 28 }} />
                 <Box>
-                  <ContactInfoText>opticsense@opticsense.qa</ContactInfoText>
-                  <ContactInfoText>info@opticsenseqatar.com</ContactInfoText>
+                  <ContactInfoText>{contact?.email}</ContactInfoText>
                 </Box>
               </ContactInfoRow>
               <ContactInfoRow>
                 <LocationOn sx={{ fontSize: 28 }} />
-                <ContactInfoText>
-                  C.R No. 150415, 2nd Floor, Bldg. 272
-                  <br />
-                  Old Airport Area Doha- Qatar
-                </ContactInfoText>
+                <ContactInfoText>{contact?.address}</ContactInfoText>
               </ContactInfoRow>
             </Stack>
             <SocialIconsWrapper>
-              {[LinkedIn, Facebook, YouTube, Instagram].map((Icon, idx) => (
-                <SocialIconBox key={idx}>
-                  <StyledIconButton href="#">
-                    <Icon />
+              {social?.linkedin && (
+                <SocialIconBox>
+                  <StyledIconButton
+                    href={social.linkedin}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <LinkedIn />
                   </StyledIconButton>
                 </SocialIconBox>
-              ))}
+              )}
+              {social?.facebook && (
+                <SocialIconBox>
+                  <StyledIconButton
+                    href={social.facebook}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <Facebook />
+                  </StyledIconButton>
+                </SocialIconBox>
+              )}
+              {social?.youtube && (
+                <SocialIconBox>
+                  <StyledIconButton
+                    href={social.youtube}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <YouTube />
+                  </StyledIconButton>
+                </SocialIconBox>
+              )}
+              {social?.instagram && (
+                <SocialIconBox>
+                  <StyledIconButton
+                    href={social.instagram}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <Instagram />
+                  </StyledIconButton>
+                </SocialIconBox>
+              )}
+              {social?.twitter && (
+                <SocialIconBox>
+                  <StyledIconButton
+                    href={social.twitter}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <X />
+                  </StyledIconButton>
+                </SocialIconBox>
+              )}
             </SocialIconsWrapper>
           </ContactInfoBox>
         </StyledGridItemLeft>

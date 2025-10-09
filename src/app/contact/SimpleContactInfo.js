@@ -1,17 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { client } from "../../sanity/sanity-client";
 
 export default function SimpleContactInfo() {
-  const theme = useTheme();
+  const [contact, setContact] = useState(null);
+
+  useEffect(() => {
+    client.fetch(`*[_type == "contactInfo"][0]`).then(setContact);
+  }, []);
 
   return (
     <StyledContainer maxWidth="xl">
       <BackgroundImage src="/images/twirly-lines.png" alt="" />
 
-      <Grid container spacing={6} alignItems="center">
+      <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
           <Section>
             <Title variant="subtitle1">Contact Info</Title>
@@ -25,11 +30,11 @@ export default function SimpleContactInfo() {
           <Section>
             <Label variant="h6">Email Address</Label>
             <Underline />
-            <StrongText variant="body1">help@info.com</StrongText>
+            <StrongText variant="body1">{contact?.email}</StrongText>
             <BodyText variant="body2">
               Assistance hours:
               <br />
-              Monday – Friday 6 am to <br /> 8 pm EST
+              {contact?.hours}
             </BodyText>
           </Section>
         </Grid>
@@ -38,20 +43,13 @@ export default function SimpleContactInfo() {
           <Section>
             <Label variant="h6">Number</Label>
             <Underline />
-            <StrongText variant="body1">(808) 998-34256</StrongText>
-            <BodyText variant="body2">
-              Assistance hours:
-              <br />
-              Monday – Friday 6 am to <br /> 8 pm EST
-            </BodyText>
+            <StrongText variant="body1">{contact?.phone}</StrongText>
           </Section>
         </Grid>
       </Grid>
     </StyledContainer>
   );
 }
-
-/* ---------------- STYLES ---------------- */
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: "relative",

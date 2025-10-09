@@ -125,9 +125,12 @@ const NavLink = styled("a")(({ theme, $active }) => ({
   },
 }));
 
-const LogoImg = styled("img")({
+const LogoImg = styled("img")(({ theme }) => ({
   height: 50,
-});
+  [theme.breakpoints.down("400px")]: {
+    display: "none",
+  },
+}));
 
 const DesktopNav = styled(Box)(({ theme }) => ({
   display: "none",

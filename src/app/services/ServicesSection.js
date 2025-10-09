@@ -1,30 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Container, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { client } from "@/sanity/sanity-client";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function ServicesSection() {
-  const services = [
-    {
-      title: "FIBER OPTICS INSTALLATION",
-      description:
-        "We provide end-to-end fiber optics installation services, ensuring high-speed and reliable connectivity for businesses and homes. Our certified team handles everything from cable laying to splicing and termination, guaranteeing minimal downtime and maximum performance.",
-      image: "/images/services/fiber1.png",
-    },
-    {
-      title: "NETWORK TESTING & CERTIFICATION",
-      description:
-        "Using advanced tools and equipment, we conduct thorough testing and certification of fiber optic networks. From signal strength analysis to fault detection, we make sure your infrastructure meets international quality and safety standards.",
-      image: "/images/services/fiber2.png",
-    },
-    {
-      title: "MAINTENANCE & TROUBLESHOOTING",
-      description:
-        "Our dedicated support team provides regular maintenance and quick troubleshooting to keep your fiber optic systems running smoothly. Whether it’s diagnosing issues, repairing damaged cables, or upgrading existing networks, we deliver reliable solutions with minimal disruption.",
-      image: "/images/services/fiber3.png",
-    },
-  ];
+  const [services, setServices] = useState([]);
+  const [experience, setExperience] = useState(null);
+
+  useEffect(() => {
+    client.fetch(`*[_type == "service"] | order(order asc)`).then(setServices);
+    client.fetch(`*[_type == "experienceSection"][0]`).then(setExperience);
+  }, []);
 
   return (
     <SectionWrapper>
@@ -57,14 +46,16 @@ export default function ServicesSection() {
       <Container>
         {services.map((service, index) => (
           <Stack
-            key={index}
+            key={service._id || index}
             direction={{ xs: "column", md: "row" }}
             gap={6}
             alignItems="center"
             sx={{ mb: 8 }}
           >
             <ImageBox sx={{ width: { xs: "100%", md: 400 } }}>
-              <img src={service.image} alt={service.title} />
+              {service.image && (
+                <img src={urlFor(service.image)} alt={service.title} />
+              )}
             </ImageBox>
 
             <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
@@ -81,57 +72,58 @@ export default function ServicesSection() {
               >
                 {service.description}
               </Typography>
+              {service.gallery && service.gallery.length > 0 && (
+                <Box sx={{ mt: 3, display: "flex", gap: 2, flexWrap: "wrap" }}>
+                  {service.gallery.map((img, i) => (
+                    <Box
+                      key={img._key || i}
+                      sx={{ width: 120, borderRadius: 2, overflow: "hidden" }}
+                    >
+                      <img
+                        src={urlFor(img)}
+                        alt={`Gallery ${i + 1}`}
+                        style={{ width: "100%" }}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              )}
             </Box>
           </Stack>
         ))}
       </Container>
 
-      <ExperienceWrapper>
-        <Grid container spacing={6} alignItems="center" direction="row">
-          <Grid item xs={12} md={6}>
-            <Box justifyItems={"center"}>
-              <Typography
-                variant="h1"
-                sx={{
-                  fontWeight: 800,
-                  mb: 2,
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                25+ Years of{" "}
-                <Box
-                  component="span"
+      {experience && (
+        <ExperienceWrapper>
+          <Grid container spacing={6} alignItems="center" direction="row">
+            <Grid item xs={12} md={6}>
+              <Box justifyItems={"center"}>
+                <Typography
+                  variant="h1"
                   sx={{
-                    color: "primary.main",
-                    textDecoration: "underline",
-                    textUnderlineOffset: 4,
+                    fontWeight: 800,
+                    mb: 2,
+                    textAlign: { xs: "center", md: "left" },
                   }}
                 >
-                  Experience
-                </Box>
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                With over two decades of expertise, we have successfully
-                delivered fiber optic solutions for enterprises, government
-                projects, and residential developments across the region. Our
-                commitment to quality, safety, and innovation has earned us the
-                trust of leading organizations and continues to drive us toward
-                building smarter, faster, and more reliable networks for the
-                future.
-              </Typography>
-            </Box>
-          </Grid>
+                  {experience.heading}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {experience.description}
+                </Typography>
+              </Box>
+            </Grid>
 
-          <Grid item xs={12} md={6}>
-            <ImageBox>
-              <img
-                src="/images/services/fiber-experience.png"
-                alt="Experience"
-              />
-            </ImageBox>
+            <Grid item xs={12} md={6}>
+              <ImageBox>
+                {experience.image && (
+                  <img src={urlFor(experience.image)} alt="Experience" />
+                )}
+              </ImageBox>
+            </Grid>
           </Grid>
-        </Grid>
-      </ExperienceWrapper>
+        </ExperienceWrapper>
+      )}
     </SectionWrapper>
   );
 }

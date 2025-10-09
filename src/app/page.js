@@ -2,20 +2,24 @@
 
 import * as React from "react";
 import Container from "@mui/material/Container";
-
 import ContactUsSection from "./contact/ContactUsSection";
 import LocateUs from "./contact/LocateUs";
+import HeroTopSection from "@/components/HeroTopSection";
+import StatsSection from "@/components/StatsSection";
+import OurServices from "@/components/OurServices";
+import HomeClientsSection from "@/components/HomeClientsSection";
+import HomeAboutSection from "@/components/AboutUs";
 
-export default function Home() {
+export default function HeroSection() {
   return (
-    <>
-      <Container
-        maxWidth={false}
-        sx={{ px: { xs: 1, md: 0 }, py: { xs: 5, md: 0 } }}
-      >
-        <ContactUsSection />
-        <LocateUs />
-      </Container>
-    </>
+    <Container maxWidth={false} disableGutters>
+      <HeroTopSection />
+      <StatsSection />
+      <OurServices />
+      <HomeClientsSection />
+      <HomeAboutSection />
+      <ContactUsSection />
+      <LocateUs />
+    </Container>
   );
 }

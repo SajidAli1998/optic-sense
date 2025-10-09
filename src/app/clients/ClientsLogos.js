@@ -1,22 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { client } from "@/sanity/sanity-client";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function ClientsLogos() {
-  const logos = [
-    { name: "Ooredoo", src: "/images/clients/ooredoo.png" },
-    { name: "Hamad Airport", src: "/images/clients/hamad-airport.png" },
-    { name: "Qatar Foundation", src: "/images/clients/qatar-foundation.png" },
-    { name: "Vodafone", src: "/images/clients/vodafone.png" },
-    { name: "Lusail City", src: "/images/clients/lusail.png" },
-    { name: "Qatargas", src: "/images/clients/qatargas.png" },
-    { name: "QatarEnergy LNG", src: "/images/clients/qatar-energy.png" },
-    { name: "Kahramaa", src: "/images/clients/kahramaa.png" },
-    { name: "CCC", src: "/images/clients/ccc.png" },
-    { name: "QAFCO", src: "/images/clients/qafco.png" },
-  ];
+  const [logos, setLogos] = useState([]);
+
+  useEffect(() => {
+    client.fetch(`*[_type == "client"] | order(order asc)`).then(setLogos);
+  }, []);
 
   return (
     <SectionWrapper maxWidth="xl">
@@ -45,7 +40,7 @@ export default function ClientsLogos() {
         {logos.map((logo, idx) => (
           <Grid item xs={6} sm={4} md={3} key={idx}>
             <LogoBox>
-              <img src={logo.src} alt={logo.name} />
+              {logo.logo && <img src={urlFor(logo.logo)} alt={logo.name} />}
             </LogoBox>
           </Grid>
         ))}

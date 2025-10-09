@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -11,7 +11,8 @@ import {
   Stack,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Facebook, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
+import { Facebook, Instagram, LinkedIn, X, YouTube } from "@mui/icons-material";
+import { client } from "@/sanity/sanity-client";
 
 const navLinks = [
   { label: "HOME", href: "/" },
@@ -21,6 +22,16 @@ const navLinks = [
 ];
 
 export default function Footer() {
+  const [contact, setContact] = useState(null);
+  const [social, setSocial] = useState(null);
+
+  useEffect(() => {
+    client.fetch(`*[_type == "contactInfo"][0]`).then(setContact);
+    client.fetch(`*[_type == "socialLinks"][0]`).then(setSocial);
+  }, []);
+
+  console.log(social);
+
   return (
     <FooterWrapper component="footer">
       <BackgroundImage
@@ -31,7 +42,7 @@ export default function Footer() {
 
       <Container maxWidth="xl">
         <Grid container spacing={6}>
-          <Grid item xs={12} md={6} size={[12, 12, 6, 6]}>
+          <Grid item xs={12} md={6}>
             <SectionTitle variant="h6">COMPANY INFO</SectionTitle>
             <Typography
               variant="body2"
@@ -47,22 +58,55 @@ export default function Footer() {
               Works, Telecommunication & Fiber Optic Solutions.
             </Typography>
             <Box>
-              <SocialIcon href="#">
-                <LinkedIn fontSize="inherit" />
-              </SocialIcon>
-              <SocialIcon href="#">
-                <Facebook fontSize="inherit" />
-              </SocialIcon>
-              <SocialIcon href="#">
-                <YouTube fontSize="inherit" />
-              </SocialIcon>
-              <SocialIcon href="#">
-                <Instagram fontSize="inherit" />
-              </SocialIcon>
+              {social?.linkedin && (
+                <SocialIcon
+                  href={social.linkedin}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <LinkedIn fontSize="inherit" />
+                </SocialIcon>
+              )}
+              {social?.facebook && (
+                <SocialIcon
+                  href={social.facebook}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <Facebook fontSize="inherit" />
+                </SocialIcon>
+              )}
+              {social?.youtube && (
+                <SocialIcon
+                  href={social.youtube}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <YouTube fontSize="inherit" />
+                </SocialIcon>
+              )}
+              {social?.instagram && (
+                <SocialIcon
+                  href={social.instagram}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <Instagram fontSize="inherit" />
+                </SocialIcon>
+              )}
+              {social?.twitter && (
+                <SocialIcon
+                  href={social.twitter}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <X fontSize="inherit" />
+                </SocialIcon>
+              )}
             </Box>
           </Grid>
 
-          <Grid item size={[12, 12, 6, 6]} xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <Stack
               direction={{ xs: "column", md: "row" }}
               spacing={{ xs: 4, md: 8 }}
@@ -82,16 +126,16 @@ export default function Footer() {
                 <SectionTitle variant="h6">CONTACT INFO</SectionTitle>
                 <Typography variant="body2" sx={{ mb: 1.5 }}>
                   Email:{" "}
-                  <FooterLink href="mailto:help@info.com">
-                    help@info.com
+                  <FooterLink href={`mailto:${contact?.email}`}>
+                    {contact?.email}
                   </FooterLink>
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 1.5 }}>
-                  Phone: (808) 998-34256
+                  Phone: {contact?.phone}
                 </Typography>
                 <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
                   Assistance hours: <br />
-                  Monday – Friday 6 am to 8 pm EST
+                  {contact?.hours}
                 </Typography>
               </Box>
             </Stack>
