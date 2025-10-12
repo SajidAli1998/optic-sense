@@ -125,57 +125,67 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const RightContent = styled(Box)(({ theme }) => ({
-  flex: "1",
-  display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
-  gridTemplateRows: "auto auto",
-  gap: theme.spacing(2),
   position: "relative",
+  flex: "1",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-end",
+  justifyContent: "flex-start",
+  gap: theme.spacing(3),
+  marginTop: theme.spacing(2),
   [theme.breakpoints.down("md")]: {
-    gridTemplateColumns: "1fr",
+    alignItems: "center",
+    gap: theme.spacing(2),
   },
 }));
 
 const TopImage = styled("img")(({ theme }) => ({
-  gridColumn: "1 / 3",
   width: "100%",
   borderRadius: "12px",
   objectFit: "cover",
   height: "180px",
+  marginBottom: theme.spacing(5),
   [theme.breakpoints.down("md")]: {
-    gridColumn: "1",
-    height: "150px",
+    marginBottom: theme.spacing(2),
   },
 }));
 
 const MiddleImage = styled("img")(({ theme }) => ({
-  gridColumn: "2 / 3",
-  gridRow: "2",
-  width: "100%",
+  width: "80%",
   borderRadius: "12px",
   objectFit: "cover",
   height: "180px",
+  position: "relative",
+  zIndex: 2,
+  marginLeft: "auto",
+  marginTop: "-40px",
   [theme.breakpoints.down("md")]: {
-    gridColumn: "1",
-    gridRow: "auto",
+    position: "static",
+    width: "100%",
+    marginTop: theme.spacing(2),
+    boxShadow: "none",
   },
 }));
 
 const BottomImageWrapper = styled(Box)(({ theme }) => ({
-  gridColumn: "1 / 2",
-  gridRow: "2",
   position: "relative",
+  width: "100%",
+  marginTop: "-125px",
+  zIndex: 1,
   [theme.breakpoints.down("md")]: {
-    gridColumn: "1",
-    gridRow: "auto",
+    width: "100%",
+    marginTop: theme.spacing(2),
   },
 }));
 
 const BottomImage = styled("img")(({ theme }) => ({
-  width: "100%",
+  width: "48%",
   borderRadius: "12px",
   objectFit: "cover",
   height: "180px",
+  [theme.breakpoints.down("md")]: {
+    boxShadow: "none",
+  },
 }));
 
 const ICABadge = styled(Box)(({ theme }) => ({
@@ -194,16 +204,25 @@ const ICABadge = styled(Box)(({ theme }) => ({
   "& img": {
     maxWidth: "100%",
   },
+  [theme.breakpoints.down("md")]: {
+    top: "10px",
+    left: "10px",
+  },
 }));
 
 const CertTag = styled(Box)(({ theme }) => ({
   position: "absolute",
-  bottom: "-15px",
-  right: "-10px",
+  bottom: "15px",
+  left: "130px",
   backgroundColor: "#4C0D11",
   color: "#fff",
   fontSize: "0.8rem",
   padding: "6px 12px",
   borderRadius: "6px",
   boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+  zIndex: 2,
+  [theme.breakpoints.down("md")]: {
+    position: "static",
+    marginTop: theme.spacing(1.5),
+  },
 }));
