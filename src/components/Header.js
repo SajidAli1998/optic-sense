@@ -38,9 +38,6 @@ export default function Header() {
       <StyledAppBar position="static">
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <LogoLink href="/">
-              <LogoImg src="/images/logo.png" alt="Opticsense WLL" />
-            </LogoLink>
             <MobileMenuButton
               edge="start"
               aria-label="menu"
@@ -48,6 +45,9 @@ export default function Header() {
             >
               <MenuIcon />
             </MobileMenuButton>
+            <LogoLink href="/">
+              <LogoImg src="/images/logo.png" alt="Opticsense WLL" />
+            </LogoLink>
           </Box>
           <DesktopNav>
             {navLinks.map((link) => (
