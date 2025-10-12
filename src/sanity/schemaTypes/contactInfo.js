@@ -1,0 +1,27 @@
+export default {
+  name: "contactInfo",
+  title: "Contact Info",
+  type: "document",
+  fields: [
+    {
+      name: "email",
+      title: "Email Address",
+      type: "string",
+    },
+    {
+      name: "phone",
+      title: "Phone Number",
+      type: "string",
+    },
+    {
+      name: "hours",
+      title: "Assistance Hours",
+      type: "string",
+    },
+    {
+      name: "address",
+      title: "Address",
+      type: "string",
+    },
+  ],
+};

@@ -1,37 +1,25 @@
+"use client";
+
 import * as React from "react";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
-import NextLink from "next/link";
-import ProTip from "@/components/ProTip";
-import Copyright from "@/components/Copyright";
-import Header from "@/components/Header";
+import ContactUsSection from "./contact/ContactUsSection";
+import LocateUs from "./contact/LocateUs";
+import HeroTopSection from "@/components/HeroTopSection";
+import StatsSection from "@/components/StatsSection";
+import OurServices from "@/components/OurServices";
+import HomeClientsSection from "@/components/HomeClientsSection";
+import HomeAboutSection from "@/components/AboutUs";
 
-export default function Home() {
+export default function HeroSection() {
   return (
-    <>
-      <Header />
-      <Container maxWidth="lg">
-        <Box
-          sx={{
-            my: 4,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-            Material UI - Next.js App Router example in JavaScript
-          </Typography>
-          <Link href="/about" color="secondary" component={NextLink}>
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
-        </Box>
-      </Container>
-    </>
+    <Container maxWidth={false} disableGutters>
+      <HeroTopSection />
+      <StatsSection />
+      <OurServices />
+      <HomeClientsSection />
+      <HomeAboutSection />
+      <ContactUsSection />
+      <LocateUs />
+    </Container>
   );
 }
