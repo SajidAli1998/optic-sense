@@ -32,9 +32,11 @@ export default function ClientsLogos() {
       </Typography>
       <SectionTitle variant="h4">Our Valued Clients</SectionTitle>
       <SectionSubtitle>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
-        augue sed suscipit dictum, erat odio luctus magna, sed pharetra orci
-        magna nec tortor. Nullam eget mi eget
+        At Opticsense, we take pride in our partnerships with a diverse range of
+        esteemed clients. Our commitment to excellence and innovation has
+        allowed us to build lasting relationships across various industries.
+        Explore the logos of our valued clients who trust us to deliver
+        exceptional solutions tailored to their needs.
       </SectionSubtitle>
       <Grid container spacing={4} justifyContent="center">
         {logos.map((logo, idx) => (

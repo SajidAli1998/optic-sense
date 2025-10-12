@@ -25,8 +25,12 @@ export default function ServicesSection() {
         <HeaderWrapper>
           <SectionTitleStyled variant="h4">Our Services</SectionTitleStyled>
           <Typography variant="body1" className="section-subtitle">
-            Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit, Sed Do
-            Eiusmod Tempor Incididunt Ut
+            At Opticsense, we are dedicated to providing innovative solutions
+            tailored to meet the unique needs of our clients. Our diverse range
+            of services is designed to empower businesses across various
+            industries, ensuring they achieve their goals with excellence and
+            efficiency. Discover how our expertise can help elevate your
+            business to new heights.
           </Typography>
         </HeaderWrapper>
 
