@@ -152,5 +152,6 @@ const BackgroundAbsouluteImage = styled("img")(({ theme }) => ({
   right: 0,
   [theme.breakpoints.down("sm")]: {
     width: "100%",
+    top: -40,
   },
 }));
