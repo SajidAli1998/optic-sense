@@ -116,11 +116,10 @@ const Content = styled("div")(({ theme }) => ({
   },
 
   [theme.breakpoints.down("sm")]: {
-    textAlign: "left", // can change to 'center' if preferred on mobile
+    textAlign: "left",
   },
 }));
 
-/** Image Panel */
 const ImagePanel = styled(Box)(({ theme }) => ({
   flex: "1 1 55%",
   height: "80vh",
@@ -129,7 +128,7 @@ const ImagePanel = styled(Box)(({ theme }) => ({
   zIndex: 0,
 
   [theme.breakpoints.down("md")]: {
-    display: "none", // ✅ hide image completely on mobile
+    display: "none",
   },
 }));
 
@@ -141,14 +140,17 @@ const BackgroundImage = styled("img")({
   display: "block",
 });
 
-const BackgroundAbsouluteImage = styled("img")({
+const BackgroundAbsouluteImage = styled("img")(({ theme }) => ({
   position: "absolute",
   width: "50%",
-  opacity: 1,
   pointerEvents: "none",
   userSelect: "none",
+  opacity: 1,
   zIndex: 0,
-  top: -30,
+  top: 0,
   left: 0,
   right: 0,
-});
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+}));

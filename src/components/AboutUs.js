@@ -13,7 +13,6 @@ export default function HomeAboutSection() {
         alignItems="center"
         justifyContent="space-between"
       >
-        {/* LEFT — TEXT CONTENT */}
         <LeftContent>
           <Typography className="eyebrow" variant="subtitle2">
             A BIT
@@ -38,7 +37,7 @@ export default function HomeAboutSection() {
             communication, and continuous innovation.
           </Typography>
 
-          <StyledButton variant="contained">
+          <StyledButton variant="contained" disabled>
             INNOVATE , INTEGRATE , TECHNOLOGY
           </StyledButton>
         </LeftContent>
@@ -62,13 +61,13 @@ export default function HomeAboutSection() {
   );
 }
 
-/* ------------------- STYLED COMPONENTS ------------------- */
-
 const SectionWrapper = styled(Container)(({ theme }) => ({
   position: "relative",
+  marginTop: theme.spacing(10),
   padding: theme.spacing(3, 4, 8),
   [theme.breakpoints.down("md")]: {
     padding: theme.spacing(6, 2),
+    marginTop: theme.spacing(0),
   },
 }));
 
@@ -117,6 +116,11 @@ const StyledButton = styled(Button)(({ theme }) => ({
   letterSpacing: "0.5px",
   "&:hover": {
     backgroundColor: "#2e090b",
+  },
+  "&.Mui-disabled": {
+    backgroundColor: "#4C0D11",
+    color: "#fff",
+    opacity: 1,
   },
 }));
 

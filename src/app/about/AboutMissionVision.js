@@ -1,10 +1,45 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function AboutMissionVision() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const query = `*[_type == "aboutMissionVision"][0]{
+        title,
+        commitment,
+        mission,
+        vision,
+        image
+      }`;
+      try {
+        const result = await client.fetch(query);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (!data) {
+    return <Typography>No data found.</Typography>;
+  }
+
   return (
     <Container
       maxWidth="xl"
@@ -26,7 +61,7 @@ export default function AboutMissionVision() {
               variant="h2"
               sx={{ fontWeight: 700, color: "text.secondary" }}
             >
-              ‘At OpticSense WLL’
+              {data.title}
             </Typography>
             <Typography
               variant="h3"
@@ -38,12 +73,16 @@ export default function AboutMissionVision() {
                 maxWidth: { xs: "100%", md: "90%" },
               }}
             >
-              We Are Committed To Delivering Reliable And Long-Term Growth.
+              {data.commitment}
             </Typography>
           </Box>
           <Box>
             <img
-              src="/images/about/mission-vision.png"
+              src={
+                data.image
+                  ? urlFor(data.image).url()
+                  : "/images/about/mission-vision.png"
+              }
               alt="Mission Vision"
               style={{
                 width: "100%",
@@ -78,10 +117,7 @@ export default function AboutMissionVision() {
               our Mission
             </Typography>
             <Typography sx={{ color: "text.secondary" }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+              {data.mission}
             </Typography>
           </Box>
           <Box
@@ -106,10 +142,7 @@ export default function AboutMissionVision() {
               our Vision
             </Typography>
             <Typography sx={{ color: "text.secondary" }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+              {data.vision}
             </Typography>
           </Box>
         </Stack>

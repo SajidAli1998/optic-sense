@@ -38,6 +38,9 @@ export default function Header() {
       <StyledAppBar position="static">
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            <LogoLink href="/">
+              <LogoImg src="/images/logo.png" alt="Opticsense WLL" />
+            </LogoLink>
             <MobileMenuButton
               edge="start"
               aria-label="menu"
@@ -45,7 +48,6 @@ export default function Header() {
             >
               <MenuIcon />
             </MobileMenuButton>
-            <LogoImg src="/images/logo.png" alt="Opticsense WLL" />
           </Box>
           <DesktopNav>
             {navLinks.map((link) => (
@@ -112,6 +114,12 @@ export default function Header() {
     </Container>
   );
 }
+
+const LogoLink = styled("a")({
+  display: "flex",
+  alignItems: "center",
+  textDecoration: "none",
+});
 
 const NavLink = styled("a")(({ theme, $active }) => ({
   marginLeft: theme.spacing(3),

@@ -106,7 +106,7 @@ export default function Footer() {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ width: ["100%", "auto"] }}>
             <Stack
               direction={{ xs: "column", md: "row" }}
               spacing={{ xs: 4, md: 8 }}
@@ -133,10 +133,13 @@ export default function Footer() {
                 <Typography variant="body2" sx={{ mb: 1.5 }}>
                   Phone: {contact?.phone}
                 </Typography>
-                <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-                  Assistance hours: <br />
-                  {contact?.hours}
-                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ lineHeight: 1.6 }}
+                  dangerouslySetInnerHTML={{
+                    __html: `Assistance hours:<br>${contact?.hours || ""}`,
+                  }}
+                />
               </Box>
             </Stack>
           </Grid>

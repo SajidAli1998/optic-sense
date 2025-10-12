@@ -9,12 +9,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NextTopLoader from "nextjs-toploader";
 import { usePathname } from "next/navigation";
+import { HelmetProvider } from "react-helmet-async";
 
 export default function RootLayout(props) {
   const pathname = usePathname() || "/";
   const isStudio = pathname.includes("/admin-panel");
-
-  console.log(pathname);
 
   return (
     <html lang="en">
@@ -23,13 +22,15 @@ export default function RootLayout(props) {
       </head>
       <body>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {!isStudio && <Header />}
-            <NextTopLoader color="#550D16" showSpinner={false} />
-            {props.children}
-            {!isStudio && <Footer />}
-          </ThemeProvider>
+          <HelmetProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {!isStudio && <Header />}
+              <NextTopLoader color="#550D16" showSpinner={false} />
+              {props.children}
+              {!isStudio && <Footer />}
+            </ThemeProvider>
+          </HelmetProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

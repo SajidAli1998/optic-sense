@@ -24,7 +24,6 @@ export default function ContactForm() {
     e.preventDefault();
     setLoading(true);
 
-    // ✅ reCAPTCHA validation
     const token = await recaptchaRef.current.executeAsync();
     recaptchaRef.current.reset();
     if (!token) {
