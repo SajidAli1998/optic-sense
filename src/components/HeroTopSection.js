@@ -45,7 +45,6 @@ export default function HeroTopSection() {
 
 const HeroStack = styled(Stack)(({ theme }) => ({
   width: "100%",
-  minHeight: "80vh",
   overflow: "hidden",
   position: "relative",
   paddingLeft: theme.spacing(4),
@@ -58,7 +57,6 @@ const HeroStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-/** 🧊 Frosted Glass Panel */
 const GlassPanel = styled(Box)(({ theme }) => ({
   position: "relative",
   flex: "0 0 45%",
@@ -90,7 +88,6 @@ const GlassPanel = styled(Box)(({ theme }) => ({
   },
 }));
 
-/** ✨ Inner radial glow */
 const InnerGlow = styled("div")({
   position: "absolute",
   top: 0,
@@ -103,7 +100,6 @@ const InnerGlow = styled("div")({
   mixBlendMode: "screen",
 });
 
-/** Text Content */
 const Content = styled("div")(({ theme }) => ({
   color: "#000",
   textAlign: "left",
@@ -122,11 +118,12 @@ const Content = styled("div")(({ theme }) => ({
 
 const ImagePanel = styled(Box)(({ theme }) => ({
   flex: "1 1 55%",
-  height: "80vh",
   overflow: "hidden",
   position: "relative",
   zIndex: 0,
-
+  justifyContent: "center",
+  alignItems: "center",
+  background: "red",
   [theme.breakpoints.down("lg")]: {
     marginTop: theme.spacing(4),
     display: "none",
@@ -135,7 +132,8 @@ const ImagePanel = styled(Box)(({ theme }) => ({
 
 const BackgroundImage = styled("img")({
   width: "100%",
-  height: "100%",
+  justifyContent: "center",
+  alignItems: "center",
   objectFit: "cover",
   objectPosition: "center",
   display: "block",
