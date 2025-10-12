@@ -6,9 +6,11 @@ import styled from "@emotion/styled";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { client } from "@/sanity/sanity-client";
 import { urlFor } from "@/sanity/lib/image";
+import { useRouter } from "next/navigation";
 
 export default function ServicesSection() {
   const [services, setServices] = React.useState([]);
+  const router = useRouter();
 
   React.useEffect(() => {
     client.fetch(`*[_type == "service"] | order(order asc)`).then(setServices);
@@ -52,7 +54,7 @@ export default function ServicesSection() {
                 <Typography variant="body2" className="card-description">
                   {service.description}
                 </Typography>
-                <ReadMore>
+                <ReadMore onClick={() => router.push("/services")}>
                   Read more <ArrowForwardIcon fontSize="small" />
                 </ReadMore>
               </CardContent>

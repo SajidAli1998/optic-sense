@@ -9,7 +9,7 @@ export default function HeroTopSection() {
     <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
       <BackgroundAbsouluteImage src="images/home-hero.png" alt="" />
       <HeroStack
-        direction={{ xs: "column", md: "row" }}
+        direction={{ xs: "column", lg: "row" }}
         alignItems={{ xs: "stretch", md: "center" }}
         justifyContent="space-between"
         my={5}
@@ -127,7 +127,8 @@ const ImagePanel = styled(Box)(({ theme }) => ({
   position: "relative",
   zIndex: 0,
 
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
+    marginTop: theme.spacing(4),
     display: "none",
   },
 }));
@@ -150,7 +151,7 @@ const BackgroundAbsouluteImage = styled("img")(({ theme }) => ({
   top: 0,
   left: 0,
   right: 0,
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     width: "100%",
     top: -40,
   },
