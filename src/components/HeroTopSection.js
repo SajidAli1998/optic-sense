@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 export default function HeroTopSection() {
   return (
     <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
+      <BackgroundAbsouluteImage src="images/home-hero.png" alt="" />
       <HeroStack
         direction={{ xs: "column", md: "row" }}
         alignItems={{ xs: "stretch", md: "center" }}
@@ -138,4 +139,16 @@ const BackgroundImage = styled("img")({
   objectFit: "cover",
   objectPosition: "center",
   display: "block",
+});
+
+const BackgroundAbsouluteImage = styled("img")({
+  position: "absolute",
+  width: "50%",
+  opacity: 1,
+  pointerEvents: "none",
+  userSelect: "none",
+  zIndex: 0,
+  top: -30,
+  left: 0,
+  right: 0,
 });

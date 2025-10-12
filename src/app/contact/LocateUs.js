@@ -12,8 +12,8 @@ export default function LocateUs() {
       </SubtitleStyled>
       <MapBox>
         <MapIframe
-          title="OpticSense Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.3002684743564!2d51.54624167525084!3d25.25030627763579!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c538d3c7c1a9%3A0x5f57d11ac6f91c5a!2sBldg.%20272%2C%20Old%20Airport%20Area%2C%20Doha%2C%20Qatar!5e0!3m2!1sen!2sqa!4v1727365200000!5m2!1sen!2sqa"
+          title="OpticSense WLL Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.648134925079!2d51.53415677525723!3d25.258236977662874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45dba30ac0d125%3A0xe2340a4a152f5a4e!2sOPTICSENSE%20WLL!5e0!3m2!1sen!2sqa!4v1728755600000!5m2!1sen!2sqa"
           allowFullScreen=""
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

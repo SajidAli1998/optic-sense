@@ -144,10 +144,6 @@ export default function Footer() {
 
         <BottomBar>
           <Typography variant="body2">Copyright © 2025</Typography>
-          <Box sx={{ display: "flex", gap: 3 }}>
-            <FooterLink href="#">Privacy Policy</FooterLink>
-            <FooterLink href="#">Terms of Use</FooterLink>
-          </Box>
         </BottomBar>
       </Container>
     </FooterWrapper>

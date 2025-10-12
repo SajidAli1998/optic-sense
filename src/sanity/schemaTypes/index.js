@@ -1,3 +1,4 @@
+import aboutUs from "./aboutUs";
 import client from "./client";
 import clientDescription from "./clientDescription";
 import contactInfo from "./contactInfo";
@@ -15,5 +16,6 @@ export const schema = {
     client,
     stats,
     clientDescription,
+    aboutUs,
   ],
 };

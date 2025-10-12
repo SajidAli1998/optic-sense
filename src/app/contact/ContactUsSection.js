@@ -23,6 +23,7 @@ import {
   X,
 } from "@mui/icons-material";
 import { client } from "../../sanity/sanity-client";
+import ContactForm from "./ContactForm";
 
 export default function ContactUsSection() {
   const [contact, setContact] = useState(null);
@@ -127,60 +128,7 @@ export default function ContactUsSection() {
           </ContactInfoBox>
         </StyledGridItemLeft>
         <StyledGridItemRight item xs={12} md={5}>
-          <FormBox>
-            <Box sx={{ mb: 2 }}>
-              <SectionTitle variant="h4">
-                Get in{" "}
-                <PrimaryColorSpan component="span">Touch</PrimaryColorSpan>
-              </SectionTitle>
-            </Box>
-            <FormSubtitle variant="body1">
-              Have a question or idea? We'd love to hear from you—just send us a
-              message!
-            </FormSubtitle>
-            <StyledForm>
-              <Stack spacing={2}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  size="small"
-                />
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  type="email"
-                  size="small"
-                />
-                <TextField
-                  label="Phone number"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  size="small"
-                />
-                <TextField
-                  label="Drop your message here"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  rows={5}
-                  size="small"
-                />
-                <StyledButton
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  type="submit"
-                >
-                  SEND
-                </StyledButton>
-              </Stack>
-            </StyledForm>
-          </FormBox>
+          <ContactForm />
         </StyledGridItemRight>
       </StyledGridContainer>
     </>

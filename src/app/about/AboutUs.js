@@ -1,19 +1,66 @@
 "use client";
 
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import styled from "@emotion/styled";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function AboutUs() {
+  const [aboutData, setAboutData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const query = `*[_type == "aboutUs"][0]{
+          tag,
+          title,
+          description,
+          mainImage,
+          backgroundImage
+        }`;
+
+        const data = await client.fetch(query);
+        setAboutData(data);
+      } catch (error) {
+        console.error("Error fetching about data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAboutData();
+  }, []);
+
+  if (loading) {
+    return (
+      <Container maxWidth="xl" sx={{ py: { xs: 2, md: 6 } }}>
+        <Typography>Loading...</Typography>
+      </Container>
+    );
+  }
+
+  if (!aboutData) {
+    return (
+      <Container maxWidth="xl" sx={{ py: { xs: 2, md: 6 } }}>
+        <Typography>No about content found.</Typography>
+      </Container>
+    );
+  }
+
   return (
     <Container
       maxWidth="xl"
       sx={{ py: { xs: 2, md: 6 }, position: "relative" }}
     >
-      <BackgroundImage src="images/about/about-background.png" alt="" />
+      {aboutData.backgroundImage && (
+        <BackgroundImage src="images/about/about-background.png" alt="" />
+      )}
       <Stack
         direction={{ xs: "column", md: "row" }}
         alignItems="stretch"
@@ -22,26 +69,17 @@ export default function AboutUs() {
       >
         <Stack p={4} flex={1} spacing={2} justifyContent="center">
           <Box sx={{ mb: 2 }}>
-            <StyledTag>About Us</StyledTag>
+            <StyledTag>{aboutData.tag || "About Us"}</StyledTag>
           </Box>
           <Typography
             variant="h1"
             component="h1"
             sx={{ fontWeight: 700, mb: 2 }}
           >
-            Who We Are
+            {aboutData.title || "Who We Are"}
           </Typography>
           <Typography sx={{ color: "text.secondary", mb: 2 }}>
-            We are proud of our skilled and passionate team, where each member
-            contributes creativity, expertise, and dedication. Together, we
-            collaborate to bring fresh ideas, deliver excellence, and create
-            lasting value.
-          </Typography>
-          <Typography sx={{ color: "text.secondary" }}>
-            We are proud of our skilled and passionate team, where each member
-            contributes creativity, expertise, and dedication. Together, we
-            collaborate to bring fresh ideas, deliver excellence, and create
-            lasting value.
+            {aboutData.description || "Default description text..."}
           </Typography>
         </Stack>
 
@@ -55,16 +93,18 @@ export default function AboutUs() {
           }}
         >
           <Box>
-            <img
-              src="/images/about/about-right.png"
-              alt="Team"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "inherit",
-              }}
-            />
+            {aboutData.mainImage && (
+              <img
+                src={urlFor(aboutData.mainImage).url()}
+                alt="Team"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "inherit",
+                }}
+              />
+            )}
           </Box>
         </Box>
       </Stack>
